@@ -2,9 +2,10 @@ from django.contrib import admin
 from .models import Advertisement
 from datetime import datetime
 from django.utils.html import format_html
+from django.conf import settings
 
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ['id','title','description', 'price','created_at','updated_at', 'get_updated_at_display','auction','image']
+    list_display = ['id','title','description', 'price','created_at','updated_at', 'get_updated_at_display','auction','display_image']
     list_filter = ['auction','created_at']
     actions = ['make_auction_false','make_auction_true']
     fieldsets = [
@@ -18,6 +19,14 @@ class AdvertisementAdmin(admin.ModelAdmin):
     @admin.action(description="Поставить возможность торга")
     def make_auction_true(self, request, queryset):
         queryset.update(auction=True)
+
+    def display_image(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-width: 80px; max-height: 80px;" />', obj.image.url)
+        else:
+            #НЕ РАБОТАЕТ С ТЕКУЩИМИ НАСТРОЙКАМИ СТИЛЯ
+            default_image = settings.STATIC_URL + 'img/adv.png'
+            return format_html('<img src="{}" style="max-width: 80px; max-height: 80px;" />', default_image)
 
     def get_updated_at_display(self, obj):
         updated_at = obj.updated_at
