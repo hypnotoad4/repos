@@ -14,77 +14,44 @@
 <body>
   <ul class="nav nav-pills sticky-top bg-white nav-fill">
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{% url 'main-page' %}">
         <span style="font-weight: bold;">Главная</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="top-sellers.html"><span style="font-weight: bold;">Топ продавцов</span>
+      <a class="nav-link" href="{% url 'top-sellers' %}"><span style="font-weight: bold;">Топ продавцов</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="advertisement-post.html">
+      <a class="nav-link" href="{% url 'adv-post' %}">
         <span style="font-weight: bold;">Разместить объявление</span>
       </a>
     </li>
+    {% if user.is_anonymous %}
     <li class="nav-item">
-      <a class="nav-link" href="register.html">
+      <a class="nav-link" href="{% url 'register' %}">
         <span style="font-weight: bold;">Регистрация</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="login.html">
+      <a class="nav-link" href="{% url 'login' %}">
         <span style="font-weight: bold;">Войти</span>
       </a>
     </li>
+  {% else %}
     <li class="nav-item">
-      <a class="nav-link" href="profile.html">
+      <a class="nav-link" href="{% url 'profile' %}">
         <span style="font-weight: bold;">Профиль</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{% url 'logout' %}">
         <span style="font-weight: bold;">Выйти</span>
       </a>
     </li>
+  {% endif %}
   </ul>
 
-  <div class="container" style="margin: 50px;">
-    <div class="display-2">
-      <span class="badge bg-primary">Объявление пользователя "username"</span>
-    </div>
-  </div>
-  <div class="col offset-2">
-    <div class="card mb-2" style="max-width: 1200px; margin-top: 20px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <a href="#" class="nav-link">
-            <img src="img/adv.png" class="img-fluid rounded-start" alt="Card title">
-          </a>
-        </div>
-        <div class="col">
-          <div class="card-body">
-            <h5 class="card-title">
-              <a href="#" class="nav-link"><strong>Продам гараж</strong></a>
-            </h5>
-            <p class="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit eum aut commodi dolores
-              praesentium fugiat! Maxime perspiciatis iste, voluptas tenetur voluptatem at beatae, aliquid
-              libero odit ab accusamus tempore assumenda.
-              Hic asperiores pariatur recusandae sapiente doloremque illo laudantium placeat sed fugit!
-              Dolorem nulla quaerat doloremque odit impedit unde esse dolorum tenetur quos error! Iure
-              quas, illo expedita sed suscipit ullam.
-              Illo quam odio, quas laborum natus error doloremque totam maiores dolorum fugit aliquam, sit
-              numquam impedit praesentium facilis amet perspiciatis facere rem magnam consectetur, nobis
-              est. Qui quod fuga illum.
-            </p>
-            <span>Автор: "username"</span>
-            <p class="card-text"><small class="text-muted">Размещено: "дата"</small></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <footer style="padding: 100px; min-height: 300px;" class="bg-primary">
     <nav class="navbar navbar-expand-sm navbar-dark">
       <a class="navbar-brand" href="#">Добавьте</a>
