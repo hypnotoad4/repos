@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
+from app_auth.forms import CustomUserCreationForm
 
 
 def login_view(request):
@@ -18,6 +19,17 @@ def login_view(request):
         login(request, user)
         return redirect(redirect_url)
     return render(request, 'app_auth/login.html', {"error": "Пользователь не найден"})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Редирект после успешной регистрации
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'app_auth/register.html', {'form': form})
 
 
 @login_required(login_url=reverse_lazy('login'))
