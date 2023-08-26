@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.html import format_html
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -23,6 +24,8 @@ class Advertisement(models.Model):
             created_time = self.created_at.time().strftime("%H:%M:%S")
             return format_html('<span style="color:green; font-weight: bold">СЕГОДНЯ В {}</span>', created_time)
         return self.created_at.strftime("%d.%m.%Y в %H:%M:%S")
+    
+
     @admin.display(description="дата обновления")
     def updated_date(self):
         from django.utils import timezone
@@ -30,6 +33,7 @@ class Advertisement(models.Model):
             created_time = self.created_at.time().strftime("%H:%M:%S")
             return format_html('<span style="color:red; font-weight: bold">СЕГОДНЯ В {}</span>', created_time)
         return self.updated_at.strftime("%d.%m.%Y в %H:%M:%S")
+    
 
     @admin.display(description='фото')
     def get_html_image(self):
@@ -37,6 +41,10 @@ class Advertisement(models.Model):
             return format_html(
                 '<img src="{url}" style="max-width: 80px; max-height: 80px;"', url=self.image.url
             )
+
+
+    def get_absolute_url(self):
+        return reverse('advertisement-detail', kwargs={'pk': self.pk})
 
 
     def __str__(self):
